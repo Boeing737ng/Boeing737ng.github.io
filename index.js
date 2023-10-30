@@ -237,7 +237,8 @@
 
           score += bodies[0].size;
           if(navigator.vibrate) {
-            e.preventDefault();
+            console.log("vibrates")
+            //e.preventDefault();
             window.navigator.vibrate(100);
           }
 
