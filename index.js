@@ -41,7 +41,7 @@
 
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
-    render: { fillStyle: "#fe9" },
+    render: { fillStyle: "#ddff99" },
   });
   background.collisionFilter = {
     group: 0,
@@ -217,6 +217,8 @@
               Date.now() - bodies[1].createdAt < 100) &&
             bodies[0].createdAt != 0 &&
             bodies[1].createdAt != 0
+
+            
           ) {
             return;
           }
@@ -234,6 +236,10 @@
           );
 
           score += bodies[0].size;
+          if(navigator.vibrate) {
+            e.preventDefault();
+            window.navigator.vibrate(100);
+          }
 
           var audio = new Audio("assets/pop.wav");
           audio.play();
@@ -250,8 +256,10 @@
 
       writeText("Game Over", "center", 240, 280, 50);
       writeText("Score: " + score, "center", 240, 320, 30);
+
+      shareScore(score);
     } else {
-      writeText(score, "start", 25, 60, 40);
+      writeText(score, "start", 25, 60, 30);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -266,7 +274,7 @@
   function writeText(text, textAlign, x, y, size) {
     ctx.font = `${size}px NanumSquare`;
     ctx.textAlign = textAlign;
-    ctx.lineWidth = size / 8;
+    ctx.lineWidth = size / 12;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
@@ -365,4 +373,20 @@
 
     return c;
   }
+  function shareScore(score) {
+    if (navigator.share) {
+        navigator.share({
+            title: '나무 2048',
+            text: `내 기록: ${score}`,
+            url: window.location.href  // URL of your game
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+        alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+    }
+  } 
+  
 })();
