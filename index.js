@@ -322,7 +322,20 @@
     return window.innerHeight / window.innerWidth >= 1.49;
   }
 
+  function preloadImage(url)
+  {
+      var img=new Image();
+      img.src=url;
+  }
+
   function init() {
+
+    for (let index = 1; index <= 11; index++) {
+      var url = `assets/img/${index}.png`
+      preloadImage(url)
+      console.log(url)
+    }
+    
     isGameOver = false;
     ball = null;
     engine.timing.timeScale = 1;
