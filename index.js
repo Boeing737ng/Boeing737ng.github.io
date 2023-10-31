@@ -52,7 +52,7 @@
 
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
-    render: { fillStyle: "#fe9" },
+    render: { fillStyle: "#ddff99" },
   });
   background.collisionFilter = {
     group: 0,
@@ -265,6 +265,12 @@
 
           score += bodies[0].size;
 
+          if(navigator.vibrate) {
+            //console.log("vibrates")
+            //e.preventDefault();
+            window.navigator.vibrate(100);
+          }
+
           if (!isMuted) {
            // const audio = new Audio("/static/pop.wav");
             //audio.play();
@@ -280,18 +286,25 @@
       ctx.rect(0, 0, 480, 720);
       ctx.fill();
 
-      writeText(gameOverMessage, "center", 240, 280, 50);
-      writeText(yourScoreMessage + score, "center", 240, 320, 30);
-      if (rank !== -1)
-        writeText(
-          `${rankMessage}${rank} (${rateMessage} ${rate}%)`,
-          "center",
-          240,
-          360,
-          30
-        );
+      writeText("Game Over", "center", 240, 280, 50);
+      writeText("Score: " + score, "center", 240, 320, 30);
+
+
+      shareScore(score);
+
+      // writeText(gameOverMessage, "center", 240, 280, 50);
+      // writeText(yourScoreMessage + score, "center", 240, 320, 30);
+      // if (rank !== -1)
+      //   writeText(
+      //     `${rankMessage}${rank} (${rateMessage} ${rate}%)`,
+      //     "center",
+      //     240,
+      //     360,
+      //     30
+      //   );
     } else {
       writeText(score, "start", 25, 60, 40);
+      writeText("v1.0", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -306,12 +319,13 @@
   function writeText(text, textAlign, x, y, size) {
     ctx.font = `${size}px Pretendard`;
     ctx.textAlign = textAlign;
-    ctx.lineWidth = size / 8;
+    // Text border width
+    //ctx.lineWidth = size / 12;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
 
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#000";
     ctx.fillText(text, x, y);
   }
 
@@ -353,7 +367,25 @@
     return window.innerHeight / window.innerWidth >= 1.49;
   }
 
+  function preloadImage(url)
+  {
+      var img=new Image();
+      img.src=url;
+  }
+
+
   function init() {
+
+
+    //writeText("v1.0", "center", 240, 280, 50);
+    
+
+    for (let index = 1; index <= 11; index++) {
+      var url = `assets/img/${index}.png`
+      preloadImage(url)
+      console.log(url)
+    }
+
     isGameOver = false;
     ball = null;
     engine.timing.timeScale = 1;
@@ -418,3 +450,18 @@
     return c;
   }
 })();
+function shareScore(score) {
+  if (navigator.share) {
+      navigator.share({
+          title: '나무 2048',
+          text: `내 기록: ${score}`,
+          url: window.location.href  // URL of your game
+      })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing:', error));
+  } else {
+      // Fallback for browsers that don't support Web Share API
+      let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+      //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+  }
+} 
