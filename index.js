@@ -236,14 +236,16 @@
           );
 
           score += bodies[0].size;
+          
+          shareScore(score);
           if(navigator.vibrate) {
-            console.log("vibrates")
+            //console.log("vibrates")
             //e.preventDefault();
             window.navigator.vibrate(100);
           }
 
-          var audio = new Audio("assets/pop.wav");
-          audio.play();
+          // var audio = new Audio("assets/pop.wav");
+          // audio.play();
         }
       }
     });
@@ -335,6 +337,8 @@
       preloadImage(url)
       console.log(url)
     }
+
+    console.log("IMAGS LODED")
     
     isGameOver = false;
     ball = null;
@@ -388,19 +392,31 @@
     return c;
   }
   function shareScore(score) {
+
+    console.log(score)
+    hybridApp.sendTextData(score)
+
     if (navigator.share) {
-        navigator.share({
-            title: '나무 2048',
-            text: `내 기록: ${score}`,
-            url: window.location.href  // URL of your game
-        })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing:', error));
+        // navigator.share({
+        //     title: '나무 2048',
+        //     text: `내 기록: ${score}`,
+        //     url: window.location.href  // URL of your game
+        // })
+        // .then(() => console.log('Successful share'))
+        // .catch((error) => console.log('Error sharing:', error));
+
+        console.log(score)
+        //hybridApp.sendTextData(score)
+
+
+        var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+        //if(this.debugFlag) alert(urlStr);
+        document.location.href = urlStr;
     } else {
         // Fallback for browsers that don't support Web Share API
-        let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
-        alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
-    }
+        //let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+        //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+      }
   } 
   
 })();
