@@ -1,4 +1,7 @@
 (() => {
+  const random = Math.random;
+  const ceil = Math.ceil;
+
   const Engine = Matter.Engine,
     Render = Matter.Render,
     World = Matter.World,
@@ -9,8 +12,10 @@
 
   const parent = document.getElementById("game");
   const canvas = document.getElementById("canvas");
-  var gameOverlayer = document.getElementById("overlay");
+  const gameOverlayer = document.getElementById("overlay");
   const floor = document.getElementById("floor");
+  const volumes = Array.from(document.getElementsByClassName("volume"));
+  const loading = document.getElementById("loadingContainer");
 
   const ctx = canvas.getContext("2d");
 
@@ -36,12 +41,18 @@
 
   let isGameOver = false;
   let score = 0;
+  let rank = -1;
+  let rate = -1;
 
   let isLineEnable = false;
 
+  let imgs;
+
+  let isMuted = localStorage.getItem("isMuted") === "true";
+
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
-    render: { fillStyle: "#ddff99" },
+    render: { fillStyle: "#fe9" },
   });
   background.collisionFilter = {
     group: 0,
@@ -62,7 +73,10 @@
   });
   World.add(engine.world, [wallLeft, wallRight, ground, background]);
 
-  Engine.run(engine);
+  Matter.Runner.run(engine);
+
+
+  //Engine.run(engine);
   Render.run(render);
 
   resize();
@@ -78,11 +92,20 @@
 
     isClicking = isMouseOver;
   });
-  addEventListener("touchstart", (e) => {
+
+  canvas.addEventListener("touchstart", (e) => {
     if (isGameOver) return;
 
     isClicking = true;
-    mousePos = e.touches[0].clientX / parent.style.zoom;
+
+    const rect = canvas.getBoundingClientRect();
+    mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
+
+    if (ball) {
+      Body.setPosition(ball, { x: mousePos, y: 50 });
+      if (mousePos > 455) Body.setPosition(ball, { x: 455, y: 50 });
+      else if (mousePos < 25) Body.setPosition(ball, { x: 25, y: 50 });
+    }
   });
 
   addEventListener("mouseup", () => {
@@ -91,11 +114,25 @@
     isClicking = false;
   });
   addEventListener("touchend", () => {
-    if (isGameOver) return;
+    if (isGameOver || !isClicking) return;
 
     isClicking = false;
 
-    screenTouched()
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
   });
 
   addEventListener("mousemove", (e) => {
@@ -114,8 +151,31 @@
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
 
-    screenTouched()
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
   });
+
+  volumes.forEach((v) =>
+    v.addEventListener("click", () => {
+      isMuted = !isMuted;
+      localStorage.setItem("isMuted", isMuted);
+
+    })
+  );
+
 
   canvas.addEventListener("mouseover", () => {
     isMouseOver = true;
@@ -128,7 +188,7 @@
   Events.on(engine, "beforeUpdate", () => {
     if (isGameOver) return;
 
-    if (ball != null) {
+    if (ball !== null) {
       const gravity = engine.world.gravity;
       Body.applyForce(ball, ball.position, {
         x: -gravity.x * gravity.scale * ball.mass,
@@ -136,13 +196,11 @@
       });
 
       if (isClicking && mousePos !== undefined) {
-        ball.position.x = mousePos;
+        Body.setPosition(ball, { x: mousePos, y: 50 });
 
-        if (mousePos > 455) ball.position.x = 455;
-        else if (mousePos < 25) ball.position.x = 25;
+        if (mousePos > 455) Body.setPosition(ball, { x: 455, y: 50 });
+        else if (mousePos < 25) Body.setPosition(ball, { x: 25, y: 50 });
       }
-
-      ball.position.y = 50;
     }
 
     isLineEnable = false;
@@ -150,11 +208,11 @@
     for (let i = 4; i < bodies.length; i++) {
       body = bodies[i];
 
-      if (body.position.y < 100) {
+      if (body.position.y < 90) {
         if (
           body !== ball &&
-          Math.abs(body.velocity.x) < 0.2 &&
-          Math.abs(body.velocity.y) < 0.2
+          Math.abs(body.velocity.x) < 0.1 &&
+          Math.abs(body.velocity.y) < 0.1
         ) {
           gameOver();
         }
@@ -179,18 +237,16 @@
     e.pairs.forEach((collision) => {
       bodies = [collision.bodyA, collision.bodyB];
 
-      if (bodies[0].size === undefined || bodies[1].size === undefined) return;
+      if (bodies[0].size == undefined || bodies[1].size == undefined) return;
 
-      if (bodies[0].size === bodies[1].size) {
+      if (bodies[0].size == bodies[1].size) {
         allBodies = Composite.allBodies(engine.world);
         if (allBodies.includes(bodies[0]) && allBodies.includes(bodies[1])) {
           if (
             (Date.now() - bodies[0].createdAt < 100 ||
               Date.now() - bodies[1].createdAt < 100) &&
-            bodies[0].createdAt != 0 &&
-            bodies[1].createdAt != 0
-
-            
+            bodies[0].createdAt !== 0 &&
+            bodies[1].createdAt !== 0
           ) {
             return;
           }
@@ -203,21 +259,16 @@
             newBall(
               (bodies[0].position.x + bodies[1].position.x) / 2,
               (bodies[0].position.y + bodies[1].position.y) / 2,
-              bodies[0].size === 11 ? 11 : bodies[0].size + 1
+              bodies[0].size == 11 ? 11 : bodies[0].size + 1
             )
           );
 
           score += bodies[0].size;
-          
-          shareScore(score);
-          if(navigator.vibrate) {
-            //console.log("vibrates")
-            //e.preventDefault();
-            window.navigator.vibrate(100);
-          }
 
-          // var audio = new Audio("assets/pop.wav");
-          // audio.play();
+          if (!isMuted) {
+            const audio = new Audio("/static/pop.wav");
+            audio.play();
+          }
         }
       }
     });
@@ -229,12 +280,18 @@
       ctx.rect(0, 0, 480, 720);
       ctx.fill();
 
-      writeText("Game Over", "center", 240, 280, 50);
-      writeText("Score: " + score, "center", 240, 320, 30);
-
-      shareScore(score);
+      writeText(gameOverMessage, "center", 240, 280, 50);
+      writeText(yourScoreMessage + score, "center", 240, 320, 30);
+      if (rank !== -1)
+        writeText(
+          `${rankMessage}${rank} (${rateMessage} ${rate}%)`,
+          "center",
+          240,
+          360,
+          30
+        );
     } else {
-      writeText(score, "start", 25, 60, 30);
+      writeText(score, "start", 25, 60, 40);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -246,26 +303,10 @@
     }
   });
 
-  function screenTouched() {
-    if (ball != null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = Math.ceil(Math.random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
-  }
   function writeText(text, textAlign, x, y, size) {
-    ctx.font = `${size}px NanumSquare`;
+    ctx.font = `${size}px Pretendard`;
     ctx.textAlign = textAlign;
-    ctx.lineWidth = size / 12;
+    ctx.lineWidth = size / 8;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
@@ -280,15 +321,15 @@
 
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
-      parent.style.top = "0px";
 
-      floor.style.height = `${
+      floor.style.height = `${Math.max(
+        10,
         (window.innerHeight - canvas.height * parent.style.zoom) /
-        parent.style.zoom
-      }px`;
+          parent.style.zoom -
+          100 / parent.style.zoom
+      )}px`;
     } else {
-      parent.style.zoom = window.innerHeight / 720 / 1.3;
-      parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
+      parent.style.zoom = window.innerHeight / 720 / 1.1;
 
       floor.style.height = "50px";
     }
@@ -312,22 +353,7 @@
     return window.innerHeight / window.innerWidth >= 1.49;
   }
 
-  function preloadImage(url)
-  {
-      var img=new Image();
-      img.src=url;
-  }
-
   function init() {
-
-    for (let index = 1; index <= 11; index++) {
-      var url = `assets/img/${index}.png`
-      preloadImage(url)
-      console.log(url)
-    }
-
-    console.log("IMAGS LODED")
-    
     isGameOver = false;
     ball = null;
     engine.timing.timeScale = 1;
@@ -340,6 +366,7 @@
     }
 
     createNewBall(1);
+
   }
 
   function gameOver() {
@@ -348,7 +375,18 @@
 
     gameOverlayer.style.display = "";
 
-    if (ball != null) World.remove(engine.world, ball);
+    if (ball !== null) World.remove(engine.world, ball);
+
+    fetch("/score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ score: score }),
+    })
+      .then((respone) => respone.json())
+      .then((data) => {
+        rank = data.rank;
+        rate = data.rate;
+      });
   }
 
   function createNewBall(size) {
@@ -379,33 +417,4 @@
 
     return c;
   }
-  function shareScore(score) {
-
-    console.log(score)
-
-    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-        //if(this.debugFlag) alert(urlStr);
-    //document.location.href = urlStr;
-
-    if (navigator.share) {
-        // navigator.share({
-        //     title: '나무 2048',
-        //     text: `내 기록: ${score}`,
-        //     url: window.location.href  // URL of your game
-        // })
-        // .then(() => console.log('Successful share'))
-        // .catch((error) => console.log('Error sharing:', error));
-
-        console.log(score)
-        //hybridApp.sendTextData(score)
-
-
-        
-    } else {
-        // Fallback for browsers that don't support Web Share API
-        //let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
-        //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
-      }
-  } 
-  
 })();
