@@ -13,6 +13,7 @@
   const parent = document.getElementById("game");
   const canvas = document.getElementById("canvas");
   const gameOverlayer = document.getElementById("overlay");
+  const refreshLayer = document.getElementById("refreshButton");
   const floor = document.getElementById("floor");
   const volumes = Array.from(document.getElementsByClassName("volume"));
   const loading = document.getElementById("loadingContainer");
@@ -376,7 +377,7 @@
 
   function init() {
 
-
+    
     //writeText("v1.0", "center", 240, 280, 50);
     
 
@@ -392,6 +393,7 @@
     score = 0;
 
     gameOverlayer.style.display = "none";
+    //playAgainButton.style.display = "none";
 
     while (engine.world.bodies.length > 4) {
       engine.world.bodies.pop();

@@ -79,6 +79,16 @@ button * {
   transform: translateY(80px);
 }
 
+#refreshButton {
+  position: absolute;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+
+
+  transform: translate(390px,30px);
+}
+
 #playAgainButton {
   padding-left: 15px;
   padding-right: 15px;
