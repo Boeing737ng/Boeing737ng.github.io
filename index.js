@@ -394,7 +394,10 @@
   function shareScore(score) {
 
     console.log(score)
-    hybridApp.sendTextData(score)
+
+    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+        //if(this.debugFlag) alert(urlStr);
+    document.location.href = urlStr;
 
     if (navigator.share) {
         // navigator.share({
@@ -409,9 +412,7 @@
         //hybridApp.sendTextData(score)
 
 
-        var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-        //if(this.debugFlag) alert(urlStr);
-        document.location.href = urlStr;
+        
     } else {
         // Fallback for browsers that don't support Web Share API
         //let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
