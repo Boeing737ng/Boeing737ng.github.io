@@ -95,22 +95,7 @@
 
     isClicking = false;
 
-    if (isGameOver) return;
-
-    if (ball != null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = Math.ceil(Math.random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
+    screenTouched()
   });
 
   addEventListener("mousemove", (e) => {
@@ -129,20 +114,7 @@
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
 
-    if (ball != null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = Math.ceil(Math.random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
+    screenTouched()
   });
 
   canvas.addEventListener("mouseover", () => {
@@ -274,6 +246,22 @@
     }
   });
 
+  function screenTouched() {
+    if (ball != null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+      ball = null;
+
+      newSize = Math.ceil(Math.random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
+  }
   function writeText(text, textAlign, x, y, size) {
     ctx.font = `${size}px NanumSquare`;
     ctx.textAlign = textAlign;
@@ -397,7 +385,7 @@
 
     var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
         //if(this.debugFlag) alert(urlStr);
-    document.location.href = urlStr;
+    //document.location.href = urlStr;
 
     if (navigator.share) {
         // navigator.share({
