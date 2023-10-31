@@ -266,8 +266,8 @@
           score += bodies[0].size;
 
           if (!isMuted) {
-            const audio = new Audio("/static/pop.wav");
-            audio.play();
+           // const audio = new Audio("/static/pop.wav");
+            //audio.play();
           }
         }
       }
