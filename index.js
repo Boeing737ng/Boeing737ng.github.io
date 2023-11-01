@@ -94,6 +94,21 @@
     isClicking = isMouseOver;
   });
 
+  floor.addEventListener("touchstart", (e) => {
+    if (isGameOver) return;
+
+    isClicking = true;
+
+    const rect = canvas.getBoundingClientRect();
+    mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
+
+    if (ball) {
+      Body.setPosition(ball, { x: mousePos, y: 50 });
+      if (mousePos > 455) Body.setPosition(ball, { x: 455, y: 50 });
+      else if (mousePos < 25) Body.setPosition(ball, { x: 25, y: 50 });
+    }
+  });
+
   canvas.addEventListener("touchstart", (e) => {
     if (isGameOver) return;
 
@@ -336,13 +351,21 @@
 
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
+      
+      // floor.style.height = `${Math.max(
+      //   10,
+      //   (window.innerHeight - canvas.height * parent.style.zoom) /
+      //     parent.style.zoom -
+      //     100 / parent.style.zoom
+      // )}px`;
 
       floor.style.height = `${Math.max(
         10,
-        (window.innerHeight - canvas.height * parent.style.zoom) /
-          parent.style.zoom -
-          100 / parent.style.zoom
+        (window.innerHeight)
       )}px`;
+      
+      console.log(canvas.height)
+      
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.1;
 
