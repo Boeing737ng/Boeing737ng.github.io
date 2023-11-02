@@ -51,6 +51,8 @@
 
   let isMuted = localStorage.getItem("isMuted") === "true";
 
+  let isFromApp = false;
+
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
     render: { fillStyle: "#ddff99" },
@@ -251,9 +253,15 @@
     if (isGameOver) return;
     //hybridApp.sendTextData("yes")
 
-    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
-    //if(this.debugFlag) alert(urlStr);
-    document.location.href = urlStr;
+
+    if (isFromApp) {
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
+
+
+      //if(this.debugFlag) alert(urlStr);
+      document.location.href = urlStr;
+    }
+    
     e.pairs.forEach((collision) => {
       bodies = [collision.bodyA, collision.bodyB];
 
