@@ -186,11 +186,8 @@
     }
 
     if (isFromApp) {
-      // var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
-
-
-      // //if(this.debugFlag) alert(urlStr);
-      // document.location.href = urlStr;
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+      document.location.href = urlStr;
     }
   });
 
@@ -505,5 +502,5 @@ function shareScore(score) {
 } 
 
 function isFromNHApp() {
-  alert("yes")
+  isFromApp = true;
 }
