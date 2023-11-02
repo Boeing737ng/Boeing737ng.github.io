@@ -249,7 +249,11 @@
 
   function collisionEvent(e) {
     if (isGameOver) return;
+    //hybridApp.sendTextData("yes")
 
+    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
+    //if(this.debugFlag) alert(urlStr);
+    document.location.href = urlStr;
     e.pairs.forEach((collision) => {
       bodies = [collision.bodyA, collision.bodyB];
 
@@ -320,7 +324,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.0", "center", 450, 20, 15);
+      writeText("v1.1", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
