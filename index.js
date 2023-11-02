@@ -331,7 +331,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.1", "center", 450, 20, 15);
+      writeText("v1.2", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -485,23 +485,24 @@
 
     return c;
   }
-})();
-function shareScore(score) {
-  if (navigator.share) {
-      navigator.share({
-          title: '나무 2048',
-          text: `내 기록: ${score}`,
-          url: window.location.href  // URL of your game
-      })
-      .then(() => console.log('Successful share'))
-      .catch((error) => console.log('Error sharing:', error));
-  } else {
-      // Fallback for browsers that don't support Web Share API
-      let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
-      //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+  function shareScore(score) {
+    if (navigator.share) {
+        navigator.share({
+            title: '나무 2048',
+            text: `내 기록: ${score}`,
+            url: window.location.href  // URL of your game
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+        //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+    }
+  } 
+  
+  function isFromNHApp() {
+    isFromApp = true;
   }
-} 
+})();
 
-function isFromNHApp() {
-  isFromApp = true;
-}
