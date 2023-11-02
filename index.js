@@ -184,6 +184,14 @@
 
       setTimeout(() => createNewBall(newSize), 500);
     }
+
+    if (isFromApp) {
+      // var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
+
+
+      // //if(this.debugFlag) alert(urlStr);
+      // document.location.href = urlStr;
+    }
   });
 
   volumes.forEach((v) =>
@@ -253,14 +261,7 @@
     if (isGameOver) return;
     //hybridApp.sendTextData("yes")
 
-
-    if (isFromApp) {
-      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^yes"}';
-
-
-      //if(this.debugFlag) alert(urlStr);
-      document.location.href = urlStr;
-    }
+    
     
     e.pairs.forEach((collision) => {
       bodies = [collision.bodyA, collision.bodyB];
@@ -502,3 +503,7 @@ function shareScore(score) {
       //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
   }
 } 
+
+function isFromNHApp() {
+  alert("yes")
+}
