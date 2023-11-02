@@ -502,6 +502,7 @@
   } 
   
   function isFromNHApp() {
+    alert("APP <-> WEB connected!!")
     isFromApp = true;
   }
 })();
