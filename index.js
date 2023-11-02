@@ -1,4 +1,4 @@
-(() => {
+//(() => {
   const random = Math.random;
   const ceil = Math.ceil;
 
@@ -502,8 +502,11 @@
   } 
   
   function isFromNHApp() {
-    alert("APP <-> WEB connected!!")
+    console.log("APP <-> WEB connected!!")
     isFromApp = true;
   }
-})();
+//})();
 
+function test() {
+  
+}
