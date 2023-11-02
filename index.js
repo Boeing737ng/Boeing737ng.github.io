@@ -287,11 +287,6 @@
 
           score += bodies[0].size;
 
-          if (isFromApp) {
-            var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-            document.location.href = urlStr;
-          }
-
           if(navigator.vibrate) {
             //console.log("vibrates")
             //e.preventDefault();
@@ -331,7 +326,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.3", "center", 450, 20, 15);
+      writeText("v1.4", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -486,6 +481,12 @@
     return c;
   }
   function shareScore(score) {
+    
+    if (isFromApp) {
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+      document.location.href = urlStr;
+    }
+
     if (navigator.share) {
         navigator.share({
             title: '나무 2048',
@@ -503,11 +504,7 @@
   
   function isFromNHApp() {
     console.log("APP <-> WEB connected!!")
-    alert("APP <-> WEB connected!!")
+    //alert("APP <-> WEB connected!!")
     isFromApp = true;
   }
 //})();
-
-function test() {
-  
-}
