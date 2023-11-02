@@ -151,6 +151,7 @@
 
       setTimeout(() => createNewBall(newSize), 500);
     }
+    
   });
 
   addEventListener("mousemove", (e) => {
@@ -183,11 +184,6 @@
       newSize = ceil(random() * 3);
 
       setTimeout(() => createNewBall(newSize), 500);
-    }
-
-    if (isFromApp) {
-      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-      document.location.href = urlStr;
     }
   });
 
@@ -290,6 +286,11 @@
           );
 
           score += bodies[0].size;
+
+          if (isFromApp) {
+            var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+            document.location.href = urlStr;
+          }
 
           if(navigator.vibrate) {
             //console.log("vibrates")
