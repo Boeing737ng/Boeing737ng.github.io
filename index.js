@@ -326,7 +326,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.4", "center", 450, 20, 15);
+      writeText("v1.5", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -358,23 +358,25 @@
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
       
-      // floor.style.height = `${Math.max(
-      //   10,
-      //   (window.innerHeight - canvas.height * parent.style.zoom) /
-      //     parent.style.zoom -
-      //     100 / parent.style.zoom
-      // )}px`;
-
       floor.style.height = `${Math.max(
         10,
-        (window.innerHeight)
+        window.innerHeight - (canvas.height * parent.style.zoom)
+
+
       )}px`;
       
-      console.log(canvas.height)
+      console.log(canvas.height * parent.style.zoom)
+      console.log(window.innerHeight - (canvas.height * parent.style.zoom))
+
+
+      // floor.style.height = `${Math.max(
+      //   110,
+      //   (window.innerHeight - (canvas.height * parent.style.zoom))
+      // )}px`;
       
     } else {
-      parent.style.zoom = window.innerHeight / 720 / 1.1;
-
+      parent.style.zoom = window.innerHeight / 720 / 1.2;
+      console.log("PC ZOOM")
       floor.style.height = "50px";
     }
 
