@@ -18,6 +18,8 @@
   const volumes = Array.from(document.getElementsByClassName("volume"));
   const loading = document.getElementById("loadingContainer");
 
+  //const refreshButton = document.getElementById("refreshButton");
+
   const ctx = canvas.getContext("2d");
 
   const engine = Engine.create();
@@ -52,6 +54,8 @@
   let isMuted = localStorage.getItem("isMuted") === "true";
 
   let isFromApp = false;
+
+  var necromancer = new Resurrect();
 
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
@@ -205,6 +209,7 @@
   });
 
   Events.on(engine, "beforeUpdate", () => {
+    //console.log("beforeUpdate")
     if (isGameOver) return;
 
     if (ball !== null) {
@@ -233,7 +238,7 @@
           Math.abs(body.velocity.x) < 0.1 &&
           Math.abs(body.velocity.y) < 0.1
         ) {
-          gameOver();
+          //gameOver();
         }
       } else if (body.position.y < 150) {
         if (
@@ -278,7 +283,7 @@
 
           World.add(
             engine.world,
-            newBall(
+            newBall( 
               (bodies[0].position.x + bodies[1].position.x) / 2,
               (bodies[0].position.y + bodies[1].position.y) / 2,
               bodies[0].size == 11 ? 11 : bodies[0].size + 1
@@ -287,6 +292,7 @@
 
           score += bodies[0].size;
 
+          
           if(navigator.vibrate) {
             //console.log("vibrates")
             //e.preventDefault();
@@ -296,10 +302,15 @@
           if (!isMuted) {
            // const audio = new Audio("/static/pop.wav");
             //audio.play();
-          }
+          }  
+
+
+          
         }
       }
     });
+
+
   }
 
   Events.on(render, "afterRender", () => {
@@ -326,7 +337,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.5", "center", 450, 20, 15);
+      writeText("v1.6", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -407,10 +418,29 @@
       img.src=url;
   }
 
+  function loadPrevGame() {
+    var test = true
+    if(localStorage.getItem("canvas_world") && test) {
+      
+      var savedWorld = necromancer.resurrect(localStorage.getItem("canvas_world"));
+      World.add(engine.world, savedWorld);
+      //World.add(engine.world, [wallLeft, wallRight, ground, background]);
+
+      //createNewBall(1);
+
+      //createNewBall(1);
+
+      console.log("YES")
+    } else {
+      createNewBall(1);
+    }
+  }
+
 
   function init() {
 
     
+
     //writeText("v1.0", "center", 240, 280, 50);
     
 
@@ -431,9 +461,11 @@
     while (engine.world.bodies.length > 4) {
       engine.world.bodies.pop();
     }
-
     createNewBall(1);
+    
+    //loadPrevGame()
 
+    
   }
 
   function gameOver() {
@@ -463,7 +495,6 @@
       category: 2,
       mask: 0,
     };
-
     World.add(engine.world, ball);
   }
 
@@ -511,4 +542,16 @@
     //alert("APP <-> WEB connected!!")
     isFromApp = true;
   }
+  function saveGameData() {
+    var data = necromancer.stringify(engine.world);
+    localStorage.setItem("canvas_world", data);
+  }
+
+
 //})();
+
+document.getElementById("refreshButton")
+    .addEventListener("click", function(event) {
+      window.location.reload(true)
+      
+    });

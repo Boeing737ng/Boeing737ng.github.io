@@ -60,6 +60,14 @@ button * {
   border-radius: 25px 25px 0 0;
 }
 
+#ciImg {
+  top: 30%;
+  left:50%;
+  transform:translateX(-50%);
+  position: absolute;
+  width: 30%;
+}
+
 #floor {
   width: 480px;
   background: #b37b50;
