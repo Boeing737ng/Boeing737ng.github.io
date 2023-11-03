@@ -360,7 +360,9 @@
       
       floor.style.height = `${Math.max(
         10,
-        window.innerHeight - (canvas.height * parent.style.zoom)
+        (window.innerHeight - canvas.height * parent.style.zoom) /
+        parent.style.zoom
+        //window.innerHeight - (canvas.height * parent.style.zoom)
 
 
       )}px`;
