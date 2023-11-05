@@ -520,9 +520,8 @@
     if (isFromApp) {
       var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
       document.location.href = urlStr;
-    }
-
-    if (navigator.share) {
+    } else {
+      if (navigator.share) {
         navigator.share({
             title: '나무 2048',
             text: `내 기록: ${score}`,
@@ -530,11 +529,14 @@
         })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
-    } else {
-        // Fallback for browsers that don't support Web Share API
-        let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
-        //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+      } else {
+          // Fallback for browsers that don't support Web Share API
+          let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+          //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+      }
     }
+
+    
   } 
   
   function isFromNHApp() {
