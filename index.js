@@ -238,7 +238,7 @@
           Math.abs(body.velocity.x) < 0.1 &&
           Math.abs(body.velocity.y) < 0.1
         ) {
-          //gameOver();
+          gameOver();
         }
       } else if (body.position.y < 150) {
         if (
