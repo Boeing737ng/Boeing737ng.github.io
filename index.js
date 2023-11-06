@@ -336,7 +336,7 @@
       writeText("Score: " + score, "center", 240, 320, 30);
 
 
-      shareScore(score);
+      
 
       // writeText(gameOverMessage, "center", 240, 280, 50);
       // writeText(yourScoreMessage + score, "center", 240, 320, 30);
@@ -489,16 +489,19 @@
 
     if (ball !== null) World.remove(engine.world, ball);
 
-    fetch("/score", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ score: score }),
-    })
-      .then((respone) => respone.json())
-      .then((data) => {
-        rank = data.rank;
-        rate = data.rate;
-      });
+
+    shareScore(score);
+
+    // fetch("/score", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ score: score }),
+    // })
+    //   .then((respone) => respone.json())
+    //   .then((data) => {
+    //     rank = data.rank;
+    //     rate = data.rate;
+    //   });
   }
 
   function createNewBall(size) {
@@ -544,7 +547,7 @@
         .catch((error) => console.log('Error sharing:', error));
       } else {
           // Fallback for browsers that don't support Web Share API
-          let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
+          //let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
           //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
       }
     }
