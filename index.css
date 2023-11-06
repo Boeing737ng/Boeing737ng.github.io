@@ -66,6 +66,8 @@ button * {
   transform:translateX(-50%);
   position: absolute;
   width: 30%;
+  pointer-events: none; 
+  user-select: none;
 }
 
 #floor {

@@ -22,6 +22,13 @@
 
   const ctx = canvas.getContext("2d");
 
+  const image = new Image;
+  image.onload = function(){
+      ctx.drawImage(image, 100, 100);
+      console.log("img loaded")
+  }
+  image.src = "assets/img/nds_img_bi_nm.png";
+
   const engine = Engine.create();
 
   const render = Render.create({
@@ -86,11 +93,17 @@
   //Engine.run(engine);
   Render.run(render);
 
+
+
+
+
   resize();
 
   refreshLoop();
 
   init();
+
+
 
   window.addEventListener("resize", resize);
 
@@ -552,8 +565,13 @@
 
 //})();
 
+
+function reloadGamee() {
+  window.location.reload(true);
+}
+
 document.getElementById("refreshButton")
-    .addEventListener("click", function(event) {
-      window.location.reload(true)
-      
-    });
+  .addEventListener("click", function(event) {
+    reloadGamee()
+    
+  });
