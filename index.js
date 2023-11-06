@@ -566,12 +566,11 @@
 //})();
 
 
-function reloadGamee() {
+function reloadGame() {
   window.location.reload(true);
 }
 
 document.getElementById("refreshButton")
   .addEventListener("click", function(event) {
-    reloadGamee()
-    
+    reloadGame()
   });
