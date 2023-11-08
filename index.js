@@ -328,12 +328,14 @@
 
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
-      ctx.fillStyle = "#ffffff55";
-      ctx.rect(0, 0, 480, 720);
-      ctx.fill();
+      if(!isFromApp) {
+        ctx.fillStyle = "#ffffff55";
+        ctx.rect(0, 0, 480, 720);
+        ctx.fill();
 
-      writeText("Game Over", "center", 240, 280, 50);
-      writeText("Score: " + score, "center", 240, 320, 30);
+        writeText("Game Over", "center", 240, 280, 50);
+        writeText("Score: " + score, "center", 240, 320, 30);
+      }
 
 
       
