@@ -350,7 +350,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.8", "center", 450, 20, 15);
+      writeText("v1.9", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -485,7 +485,9 @@
     isGameOver = true;
     engine.timing.timeScale = 0;
 
-    gameOverlayer.style.display = "";
+    if (!isFromApp) {
+      gameOverlayer.style.display = "";
+    }
 
     if (ball !== null) World.remove(engine.world, ball);
 
@@ -555,7 +557,7 @@
     
   } 
   
-  function isFromNHApp() {
+  function isFromNHApp(trigger) {
     console.log("APP <-> WEB connected!!")
     //alert("APP <-> WEB connected!!")
     isFromApp = true;
