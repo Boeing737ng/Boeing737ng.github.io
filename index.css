@@ -119,11 +119,9 @@ button * {
 #refreshButton {
   position: absolute;
   align-items: center;
-  width: 80px;
+  width: 120px;
   height: 30px;
-
-
-  transform: translate(340px,5px);
+  transform: translate(300px,5px);
 }
 
 #playAgainButton {

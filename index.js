@@ -575,5 +575,6 @@ function reloadGame() {
 
 document.getElementById("refreshButton")
   .addEventListener("click", function(event) {
-    reloadGame()
+    //reloadGame()
+    gameOver()
   });
