@@ -352,7 +352,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v2.0", "center", 450, 20, 15);
+      writeText("v2.1", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -574,7 +574,7 @@
 
 
 function reloadGame() {
-  window.location.reload(true);
+  location.reload();
 }
 
 document.getElementById("refreshButton")
