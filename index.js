@@ -18,6 +18,8 @@
   const volumes = Array.from(document.getElementsByClassName("volume"));
   const loading = document.getElementById("loadingContainer");
 
+  const biImage = document.getElementById("ciImg");
+
   //const refreshButton = document.getElementById("refreshButton");
 
   const ctx = canvas.getContext("2d");
@@ -88,14 +90,8 @@
   World.add(engine.world, [wallLeft, wallRight, ground, background]);
 
   Matter.Runner.run(engine);
-
-
   //Engine.run(engine);
   Render.run(render);
-
-
-
-
 
   resize();
 
@@ -211,8 +207,6 @@
 
     })
   );
-
-
   canvas.addEventListener("mouseover", () => {
     isMouseOver = true;
   });
@@ -270,10 +264,6 @@
 
   function collisionEvent(e) {
     if (isGameOver) return;
-    //hybridApp.sendTextData("yes")
-
-    
-    
     e.pairs.forEach((collision) => {
       bodies = [collision.bodyA, collision.bodyB];
 
@@ -322,8 +312,6 @@
         }
       }
     });
-
-
   }
 
   Events.on(render, "afterRender", () => {
@@ -336,10 +324,6 @@
         writeText("Game Over", "center", 240, 280, 50);
         writeText("Score: " + score, "center", 240, 320, 30);
       }
-
-
-      
-
       // writeText(gameOverMessage, "center", 240, 280, 50);
       // writeText(yourScoreMessage + score, "center", 240, 320, 30);
       // if (rank !== -1)
@@ -352,7 +336,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v2.2", "center", 450, 20, 15);
+      //writeText("v2.2", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -401,11 +385,20 @@
       //   110,
       //   (window.innerHeight - (canvas.height * parent.style.zoom))
       // )}px`;
+
+      biImage.style.left = "50%"
+      biImage.style.transform = "translateX(-50%)";
+
+      biImage.style.top = `${canvas.height / 3}px`;
       
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.2;
       console.log("PC ZOOM")
       floor.style.height = "50px";
+
+      biImage.style.transform = "none";
+      biImage.style.width = `${canvas.width / 3}px`;
+      biImage.style.left = `${canvas.width / 3}px`;
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
@@ -441,23 +434,13 @@
       World.add(engine.world, savedWorld);
       //World.add(engine.world, [wallLeft, wallRight, ground, background]);
 
-      //createNewBall(1);
-
-      //createNewBall(1);
-
       console.log("YES")
     } else {
       createNewBall(1);
     }
   }
 
-
   function init() {
-
-    
-
-    //writeText("v1.0", "center", 240, 280, 50);
-    
 
     for (let index = 1; index <= 11; index++) {
       var url = `assets/img/${index}.png`
@@ -479,8 +462,6 @@
     createNewBall(1);
     
     //loadPrevGame()
-
-    
   }
 
   function gameOver() {
@@ -536,7 +517,6 @@
     return c;
   }
   function shareScore(score) {
-    
     if (isFromApp) {
       var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
       document.location.href = urlStr;
@@ -555,8 +535,6 @@
           //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
       }
     }
-
-    
   } 
   
   function isFromNHApp(trigger) {
