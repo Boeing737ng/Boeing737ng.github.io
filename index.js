@@ -377,8 +377,8 @@
 
       )}px`;
       
-      console.log(canvas.height * parent.style.zoom)
-      console.log(window.innerHeight - (canvas.height * parent.style.zoom))
+     // console.log(canvas.height * parent.style.zoom)
+      //console.log(window.innerHeight - (canvas.height * parent.style.zoom))
 
 
       // floor.style.height = `${Math.max(
@@ -433,8 +433,6 @@
       var savedWorld = necromancer.resurrect(localStorage.getItem("canvas_world"));
       World.add(engine.world, savedWorld);
       //World.add(engine.world, [wallLeft, wallRight, ground, background]);
-
-      console.log("YES")
     } else {
       createNewBall(1);
     }
@@ -445,7 +443,6 @@
     for (let index = 1; index <= 11; index++) {
       var url = `assets/img/${index}.png`
       preloadImage(url)
-      console.log(url)
     }
 
     isGameOver = false;
@@ -555,8 +552,8 @@ function reloadGame() {
   location.reload();
 }
 
-document.getElementById("refreshButton")
-  .addEventListener("click", function(event) {
-    //reloadGame()
-    gameOver()
-  });
+// document.getElementById("refreshButton")
+//   .addEventListener("click", function(event) {
+//     //reloadGame()
+//     gameOver()
+//   });
