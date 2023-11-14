@@ -99,8 +99,6 @@
 
   init();
 
-
-
   window.addEventListener("resize", resize);
 
   addEventListener("mousedown", () => {
@@ -148,23 +146,7 @@
     if (isGameOver || !isClicking) return;
 
     isClicking = false;
-
-    if (ball !== null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = ceil(random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
-    
+    bodyTouched();
   });
 
   addEventListener("mousemove", (e) => {
@@ -182,22 +164,7 @@
 
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
-
-    if (ball !== null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-
-      ball = null;
-
-      newSize = ceil(random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
+    bodyTouched();
   });
 
   volumes.forEach((v) =>
@@ -262,6 +229,23 @@
   Events.on(engine, "collisionActive", collisionEvent);
   Events.on(engine, "collisionStart", collisionEvent);
 
+  function bodyTouched() {
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
+  }
+
   function collisionEvent(e) {
     if (isGameOver) return;
     e.pairs.forEach((collision) => {
@@ -306,9 +290,6 @@
            // const audio = new Audio("/static/pop.wav");
             //audio.play();
           }  
-
-
-          
         }
       }
     });
@@ -439,7 +420,6 @@
   }
 
   function init() {
-
     for (let index = 1; index <= 11; index++) {
       var url = `assets/img/${index}.png`
       preloadImage(url)
