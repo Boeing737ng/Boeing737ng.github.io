@@ -552,8 +552,8 @@ function reloadGame() {
   location.reload();
 }
 
-// document.getElementById("refreshButton")
-//   .addEventListener("click", function(event) {
-//     //reloadGame()
-//     gameOver()
-//   });
+document.getElementById("refreshButton")
+  .addEventListener("click", function(event) {
+    //reloadGame()
+    gameOver()
+  });
