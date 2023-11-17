@@ -121,7 +121,7 @@
 
     isClicking = true;
 
-    const rect = canvas.getBoundingClientRect();
+    const rect = floor.getBoundingClientRect();
     mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
     if (ball) {
@@ -154,7 +154,7 @@
   addEventListener("touchend", () => {
     if (isGameOver || !isClicking) return;
 
-    //isClicking = false;
+    isClicking = false;
     bodyTouched();
   });
 
@@ -188,6 +188,14 @@
   });
 
   canvas.addEventListener("mouseout", () => {
+    isMouseOver = false;
+  });
+
+  floor.addEventListener("mouseover", () => {
+    isMouseOver = true;
+  });
+
+  floor.addEventListener("mouseout", () => {
     isMouseOver = false;
   });
 
@@ -326,7 +334,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 30);
-      writeText("v0.2", "center", 450, 20, 10);
+      writeText("v0.3", "center", 450, 20, 10);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
