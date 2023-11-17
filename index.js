@@ -154,7 +154,7 @@
   addEventListener("touchend", () => {
     if (isGameOver || !isClicking) return;
 
-    isClicking = false;
+    //isClicking = false;
     bodyTouched();
   });
 
@@ -326,7 +326,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 30);
-      writeText("v0.1", "center", 450, 20, 10);
+      writeText("v0.2", "center", 450, 20, 10);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
