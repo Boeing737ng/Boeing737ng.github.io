@@ -101,6 +101,15 @@
 
   window.addEventListener("resize", resize);
 
+  document.addEventListener("DOMContentLoaded", documentInit);
+
+  function documentInit() {
+  
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"PAGE_INIT^OK"}';
+      document.location.href = urlStr;
+    
+  }
+
   addEventListener("mousedown", () => {
     if (isGameOver) return;
 
@@ -316,7 +325,7 @@
       //     30
       //   );
     } else {
-      writeText(score, "start", 25, 60, 40);
+      writeText(score, "start", 25, 60, 30);
       //writeText("v2.2", "center", 450, 20, 15);
 
       if (isLineEnable) {
@@ -330,16 +339,20 @@
   });
 
   function writeText(text, textAlign, x, y, size) {
-    ctx.font = `${size}px Pretendard`;
+    ctx.font = `${size}px NPSfontBold`;
     ctx.textAlign = textAlign;
+  
     // Text border width
-    //ctx.lineWidth = size / 12;
+    //ctx.lineWidth = size / 8;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#333333";
     ctx.fillText(text, x, y);
+
+    document.fonts.ready
+      
   }
 
   function resize() {
