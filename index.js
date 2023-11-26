@@ -104,10 +104,8 @@
   document.addEventListener("DOMContentLoaded", documentInit);
 
   function documentInit() {
-  
       var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"PAGE_INIT^OK"}';
       document.location.href = urlStr;
-    
   }
 
   addEventListener("mousedown", () => {
@@ -121,7 +119,7 @@
 
     isClicking = true;
 
-    const rect = floor.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
     if (ball) {
@@ -188,14 +186,6 @@
   });
 
   canvas.addEventListener("mouseout", () => {
-    isMouseOver = false;
-  });
-
-  floor.addEventListener("mouseover", () => {
-    isMouseOver = true;
-  });
-
-  floor.addEventListener("mouseout", () => {
     isMouseOver = false;
   });
 
@@ -334,7 +324,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 30);
-      writeText("v0.3", "center", 450, 20, 10);
+      writeText("v1.0", "center", 450, 20, 10);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -441,6 +431,7 @@
   }
 
   function init() {
+  
     for (let index = 1; index <= 11; index++) {
       var url = `assets/img/${index}.png`
       preloadImage(url)
