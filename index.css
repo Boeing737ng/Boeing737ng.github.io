@@ -14,6 +14,7 @@
   font-style: normal;
 }
 
+
 html {
   height: 100%;
   margin: 0;
@@ -93,15 +94,6 @@ button * {
   border-radius: 0 0 25px 25px;
   display: table-cell;
   vertical-align: bottom;
-
-
-
-
-
-  /* background-image: radial-gradient(#212121 20%, transparent 20%),
-  radial-gradient(#fafafa 20%, transparent 20%);
-  background-position: 0 0, 0px 50px;
-  background-size: 100px 100px; */
 }
 
 #banner {

@@ -236,23 +236,6 @@
   Events.on(engine, "collisionActive", collisionEvent);
   Events.on(engine, "collisionStart", collisionEvent);
 
-  function bodyTouched() {
-    if (ball !== null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = ceil(random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
-  }
-
   function collisionEvent(e) {
     if (isGameOver) return;
     e.pairs.forEach((collision) => {
@@ -296,7 +279,7 @@
           if (!isMuted) {
            // const audio = new Audio("/static/pop.wav");
             //audio.play();
-          }  
+          }
         }
       }
     });
@@ -323,8 +306,8 @@
       //     30
       //   );
     } else {
-      writeText(score, "start", 25, 60, 30);
-      writeText("v1.0", "center", 450, 20, 10);
+      writeText(score, "start", 25, 60, 40);
+      writeText("v1.1", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -337,20 +320,16 @@
   });
 
   function writeText(text, textAlign, x, y, size) {
-    ctx.font = `${size}px NPSfontBold`;
+    ctx.font = `${size}px Pretendard`;
     ctx.textAlign = textAlign;
-  
     // Text border width
-    //ctx.lineWidth = size / 8;
+    //ctx.lineWidth = size / 12;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
 
-    ctx.fillStyle = "#333333";
+    ctx.fillStyle = "#000";
     ctx.fillText(text, x, y);
-
-    document.fonts.ready
-      
   }
 
   function resize() {
@@ -396,6 +375,24 @@
     Render.setPixelRatio(render, parent.style.zoom * 2);
   }
 
+  function bodyTouched() {
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
+  }
+
+
   function refreshLoop() {
     window.requestAnimationFrame(() => {
       const now = performance.now();
@@ -431,7 +428,7 @@
   }
 
   function init() {
-  
+
     for (let index = 1; index <= 11; index++) {
       var url = `assets/img/${index}.png`
       preloadImage(url)
