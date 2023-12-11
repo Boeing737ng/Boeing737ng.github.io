@@ -68,7 +68,7 @@
 
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
-    render: { fillStyle: "#ddff99" },
+    render: { fillStyle: "#D8FFFF" },
   });
   background.collisionFilter = {
     group: 0,
@@ -99,14 +99,9 @@
 
   init();
 
+
+
   window.addEventListener("resize", resize);
-
-  document.addEventListener("DOMContentLoaded", documentInit);
-
-  function documentInit() {
-      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"PAGE_INIT^OK"}';
-      document.location.href = urlStr;
-  }
 
   addEventListener("mousedown", () => {
     if (isGameOver) return;
@@ -153,7 +148,23 @@
     if (isGameOver || !isClicking) return;
 
     isClicking = false;
-    bodyTouched();
+
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
+    
   });
 
   addEventListener("mousemove", (e) => {
@@ -171,7 +182,22 @@
 
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
-    bodyTouched();
+
+    if (ball !== null) {
+      ball.createdAt = 0;
+      ball.collisionFilter = {
+        group: 0,
+        category: 1,
+        mask: -1,
+      };
+      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
+
+      ball = null;
+
+      newSize = ceil(random() * 3);
+
+      setTimeout(() => createNewBall(newSize), 500);
+    }
   });
 
   volumes.forEach((v) =>
@@ -279,7 +305,10 @@
           if (!isMuted) {
            // const audio = new Audio("/static/pop.wav");
             //audio.play();
-          }
+          }  
+
+
+          
         }
       }
     });
@@ -307,7 +336,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      writeText("v1.1", "center", 450, 20, 15);
+      //writeText("v2.2", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -375,24 +404,6 @@
     Render.setPixelRatio(render, parent.style.zoom * 2);
   }
 
-  function bodyTouched() {
-    if (ball !== null) {
-      ball.createdAt = 0;
-      ball.collisionFilter = {
-        group: 0,
-        category: 1,
-        mask: -1,
-      };
-      Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
-      ball = null;
-
-      newSize = ceil(random() * 3);
-
-      setTimeout(() => createNewBall(newSize), 500);
-    }
-  }
-
-
   function refreshLoop() {
     window.requestAnimationFrame(() => {
       const now = performance.now();
@@ -445,9 +456,42 @@
     while (engine.world.bodies.length > 4) {
       engine.world.bodies.pop();
     }
+    createBG(1);
+
     createNewBall(1);
     
     //loadPrevGame()
+  }
+
+
+  function createBG(size) {
+    bg = newBG(render.options.width / 2, 50, size);
+    bg.collisionFilter = {
+      group: -1,
+      category: 2,
+      mask: 0,
+    };
+    World.add(engine.world, bg);
+  }
+
+  function newBG(x, y, size) {
+    c = Bodies.rectangle(240, 570, 1,1, {
+      isSensor: true,
+      isStatic: true,
+      render: {
+        sprite: {
+          texture: `assets/img/nds_img_pang_bg01.png`,
+          xScale: 0.5,
+          yScale: 0.5,
+        },
+      },
+    });
+    c.size = size;
+    c.createdAt = Date.now();
+    c.restitution = 0.3;
+    c.friction = 0.1;
+
+    return c;
   }
 
   function gameOver() {
@@ -541,8 +585,8 @@ function reloadGame() {
   location.reload();
 }
 
-document.getElementById("refreshButton")
-  .addEventListener("click", function(event) {
-    //reloadGame()
-    gameOver()
-  });
+// document.getElementById("refreshButton")
+//   .addEventListener("click", function(event) {
+//     //reloadGame()
+//     gameOver()
+//   });
