@@ -160,7 +160,10 @@
       Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
       ball = null;
 
-      newSize = ceil(random() * 3);
+      //newSize = ceil(random() * 3);
+      // TEST
+      newSize = ceil(random() * 5);
+      console.log(newSize)
 
       setTimeout(() => createNewBall(newSize), 500);
     }
@@ -194,7 +197,10 @@
 
       ball = null;
 
-      newSize = ceil(random() * 3);
+       //newSize = ceil(random() * 3);
+      // TEST
+      newSize = ceil(random() * 5);
+      console.log(newSize)
 
       setTimeout(() => createNewBall(newSize), 500);
     }
