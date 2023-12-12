@@ -160,11 +160,7 @@
       Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
       ball = null;
 
-      //newSize = ceil(random() * 3);
-      // TEST
-      newSize = ceil(random() * 5);
-      console.log(newSize)
-
+      newSize = ceil(random() * 3);
       setTimeout(() => createNewBall(newSize), 500);
     }
     
@@ -197,9 +193,7 @@
 
       ball = null;
 
-       //newSize = ceil(random() * 3);
-      // TEST
-      newSize = ceil(random() * 5);
+      newSize = ceil(random() * 3);
       console.log(newSize)
 
       setTimeout(() => createNewBall(newSize), 500);
@@ -342,7 +336,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 60, 40);
-      //writeText("v2.2", "center", 450, 20, 15);
+      writeText("v2.3", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#f55";
@@ -536,12 +530,17 @@
   }
 
   function newBall(x, y, size) {
-    c = Bodies.circle(x, y, size * 10, {
+    c = Bodies.circle(x, y, size * 12, {
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75,
-          yScale: size / 12.75,
+          // xScale: size / 12.75,
+          // yScale: size / 12.75,
+
+          xScale: size / 10.75,
+          yScale: size / 10.75,
+
+
         },
       },
     });
