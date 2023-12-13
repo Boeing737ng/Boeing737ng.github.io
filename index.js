@@ -234,7 +234,7 @@
       }
     }
 
-    isLineEnable = false;
+    isLineEnable = true;
     const bodies = Composite.allBodies(engine.world);
     for (let i = 4; i < bodies.length; i++) {
       body = bodies[i];
@@ -335,11 +335,12 @@
       //     30
       //   );
     } else {
-      writeText(score, "start", 25, 60, 40);
-      writeText("v2.3", "center", 450, 20, 15);
+      writeText(score, "start", 25, 70, 40);
+      writeText("v2.2", "center", 450, 20, 15);
 
       if (isLineEnable) {
-        ctx.strokeStyle = "#f55";
+        ctx.strokeStyle = "#74D5FF";
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(0, 100);
         ctx.lineTo(480, 100);
@@ -352,7 +353,7 @@
     ctx.font = `${size}px Pretendard`;
     ctx.textAlign = textAlign;
     // Text border width
-    //ctx.lineWidth = size / 12;
+    ctx.lineWidth = 1;
 
     ctx.strokeStyle = "#000";
     ctx.strokeText(text, x, y);
