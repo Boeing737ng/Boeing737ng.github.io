@@ -355,10 +355,10 @@
     // Text border width
     ctx.lineWidth = 1;
 
-    ctx.strokeStyle = "#000";
+    ctx.strokeStyle = "#333333";
     ctx.strokeText(text, x, y);
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#333333";
     ctx.fillText(text, x, y);
   }
 
@@ -531,15 +531,15 @@
   }
 
   function newBall(x, y, size) {
-    c = Bodies.circle(x, y, size * 12, {
+    c = Bodies.circle(x, y, size * 11, {
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
           // xScale: size / 12.75,
           // yScale: size / 12.75,
 
-          xScale: size / 10.75,
-          yScale: size / 10.75,
+          xScale: size / 11.75,
+          yScale: size / 11.75,
 
 
         },
