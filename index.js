@@ -234,7 +234,7 @@
       }
     }
 
-    isLineEnable = true;
+    isLineEnable = false;
     const bodies = Composite.allBodies(engine.world);
     for (let i = 4; i < bodies.length; i++) {
       body = bodies[i];
