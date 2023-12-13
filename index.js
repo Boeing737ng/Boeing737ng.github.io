@@ -64,7 +64,7 @@
 
   let isFromApp = false;
 
-  var necromancer = new Resurrect();
+  // var necromancer = new Resurrect();
 
   const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
@@ -194,7 +194,6 @@
       ball = null;
 
       newSize = ceil(random() * 3);
-      console.log(newSize)
 
       setTimeout(() => createNewBall(newSize), 500);
     }
@@ -336,7 +335,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 70, 40);
-      writeText("v2.2", "center", 450, 20, 15);
+      writeText("v2.21", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
