@@ -40,6 +40,8 @@ body {
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   transition-duration: 0.3s;
+
+  display: none;
 }
 .popupContainer:after{
   content:'';
@@ -50,6 +52,7 @@ body {
   top:0;
   left:0;
   opacity:0.5;
+  
 }
 .popup {
   position: relative;
