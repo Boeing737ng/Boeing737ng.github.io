@@ -558,7 +558,7 @@
     } else {
       if (navigator.share) {
         navigator.share({
-            title: '나무 2048',
+            title: '나무팡',
             text: `내 기록: ${score}`,
             url: window.location.href  // URL of your game
         })
