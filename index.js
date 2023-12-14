@@ -19,6 +19,9 @@
   const loading = document.getElementById("loadingContainer");
 
   const biImage = document.getElementById("ciImg");
+  const namuhLinkButton = document.getElementById("namuhLinkButton");
+  const popupCloseButton = document.getElementById("popupCloseButton");
+  const guidePopup = document.getElementById("guidePopup");
 
   //const refreshButton = document.getElementById("refreshButton");
 
@@ -558,7 +561,7 @@
     } else {
       if (navigator.share) {
         navigator.share({
-            title: '나무 2048',
+            title: '나무팡',
             text: `내 기록: ${score}`,
             url: window.location.href  // URL of your game
         })
@@ -595,3 +598,12 @@ function reloadGame() {
 //     //reloadGame()
 //     gameOver()
 //   });
+
+namuhLinkButton.addEventListener("click", (event) => {
+  window.open("https://namuh.page.link/popPANG");
+});
+
+popupCloseButton.addEventListener("click", (event) => {
+  guidePopup.style.display = "none";
+
+});

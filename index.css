@@ -32,6 +32,89 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.popupContainer{
+  top: 0;
+  width:100%;
+  height:100%;
+  position:absolute;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.popupContainer:after{
+  content:'';
+  background-color: #141414;
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0.5;
+}
+.popup {
+  position: relative;
+  width: 90%;
+  max-width: 492px;
+  height: 485px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: white;
+  border-radius: 16px;
+  z-index:1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.popupCloseButton {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 30px;
+  height: 30px;
+  
+}
+.namuhConfirmButton {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 75px;
+  font-family: 'NanumBarunGothic', 'serif';
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  border-radius: 0 0 16px 16px;
+  background-color: #84C13D;
+}
+.popupTitle {
+  color: #333333;
+  text-align: center;
+  font-family: 'NanumBarunGothic', 'serif';
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 38px;
+  top: 50px;
+  position: relative;
+}
+.popupDescription {
+  color: #666666;
+  position: relative;
+  text-align: center;
+  font-family: NanumBarunGothic;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  top: 50px;
+}
+.guideImage {
+  position: relative;
+  width: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+}
+
 .container {
   display: grid;
   width: 100%;
