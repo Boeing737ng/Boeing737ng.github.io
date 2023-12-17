@@ -41,7 +41,7 @@ body {
   -moz-transition-duration: 0.3s;
   transition-duration: 0.3s;
 
-  /* display: none; */
+  display: none;
 }
 .popupContainer:after{
   content:'';
