@@ -392,7 +392,7 @@
       biImage.style.left = "50%"
       biImage.style.transform = "translateX(-50%)";
 
-      biImage.style.top = `${canvas.height / 3}px`;
+      biImage.style.top = `${canvas.height / 2.8}px`;
       
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.2;

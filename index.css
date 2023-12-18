@@ -41,7 +41,7 @@ body {
   -moz-transition-duration: 0.3s;
   transition-duration: 0.3s;
 
-  display: none;
+  /* display: none; */
 }
 .popupContainer:after{
   content:'';
@@ -58,7 +58,7 @@ body {
   position: relative;
   width: 90%;
   max-width: 492px;
-  height: 485px;
+  height: 57%;
   top: 45%;
   left: 50%;
   transform: translate(-50%,-50%);
@@ -87,6 +87,7 @@ body {
   line-height: 38px;
   border-radius: 0 0 16px 16px;
   background-color: #84C13D;
+  font-size: 5.5vw;
 }
 .popupTitle {
   color: #333333;
@@ -98,6 +99,7 @@ body {
   line-height: 38px;
   top: 50px;
   position: relative;
+  font-size: 5.5vw;
 }
 .popupDescription {
   color: #666666;
@@ -109,6 +111,7 @@ body {
   font-weight: 400;
   line-height: 25px;
   top: 50px;
+  font-size: 4.5vw;
 }
 .guideImage {
   position: relative;
