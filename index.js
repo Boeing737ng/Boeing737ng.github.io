@@ -19,12 +19,6 @@
   const loading = document.getElementById("loadingContainer");
 
   const biImage = document.getElementById("ciImg");
-  const namuhLinkButton = document.getElementById("namuhLinkButton");
-  const popupCloseButton = document.getElementById("popupCloseButton");
-  const guidePopup = document.getElementById("guidePopup");
-  const retryGameButton = document.getElementById("retryGameButton");
-  const gameOverPopup = document.getElementById("gameoverPopup");
-  const scoreText = document.getElementById("scoreText");
 
   //const refreshButton = document.getElementById("refreshButton");
 
@@ -336,7 +330,7 @@
       }
     } else {
       writeText(score, "start", 25, 70, 40, "#333333");
-      writeText("v2.24", "center", 450, 20, 15, "#333333");
+      writeText("v2.25", "center", 450, 20, 15, "#333333");
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
@@ -455,9 +449,6 @@
     engine.timing.timeScale = 1;
     score = 0;
 
-    gameOverPopup.style.display = "none";
-    //playAgainButton.style.display = "none";
-
     while (engine.world.bodies.length > 4) {
       engine.world.bodies.pop();
     }
@@ -502,12 +493,14 @@
     isGameOver = true;
     engine.timing.timeScale = 0;
 
-    if (!isFromApp) {
-      gameOverPopup.style.display = "";
-      scoreText.textContent = score
-    }
+    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+    document.location.href = urlStr;
+
 
     if (ball !== null) World.remove(engine.world, ball);
+
+    
+
     //shareScore(score);
   }
 
@@ -545,8 +538,7 @@
   }
   function shareScore(score) {
     if (isFromApp) {
-      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-      document.location.href = urlStr;
+      
     } else {
       if (navigator.share) {
         navigator.share({
@@ -583,16 +575,3 @@ document.getElementById("refreshButton")
     //reloadGame()
     gameOver()
   });
-
-namuhLinkButton.addEventListener("click", (event) => {
-  window.open("https://namuh.page.link/popPANG");
-});
-
-popupCloseButton.addEventListener("click", (event) => {
-  guidePopup.style.display = "none";
-
-});
-
-retryGameButton.addEventListener("click", (event) => {
-  reloadGame();
-});
