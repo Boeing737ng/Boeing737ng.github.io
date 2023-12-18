@@ -40,10 +40,20 @@
           GAME OVER
         </button>
         <img id="ciImg" src="assets/img/nds_img_bi_nm.png" alt="">
-        <div id="overlay">
+        <!-- <div id="overlay">
           <button id="playAgainButton" onclick="location.reload()">
             다시하기
           </button>
+        </div> -->
+
+        <div class="popupContainer" id="gameoverPopup">
+          <img src="assets/img/nds_img_gameover_bg.png" id="gameoverBgImg" alt="">
+          <p class="gameOverText" id="subText">내 점수</p>
+          <p class="gameOverText" id="score">
+            <sub id="scoreText" style="font-size: 80px;font-weight: 600;position: relative;">0</sub>
+            <sub style="font-size: 30px;font-weight: 100;position: inherit;">점</sub>
+          </p>
+          <button class="namuhConfirmButton" id="retryGameButton">게임 재도전</button>
         </div>
         <canvas id="canvas"></canvas>
         <div id="floor">
@@ -70,6 +80,8 @@
         <button class="namuhConfirmButton" id="namuhLinkButton">나무에서 플레이하기</button>
       </div>
     </div>
+
+    
    
     
     <!-- <script defer src="resurrect.js"></script> -->

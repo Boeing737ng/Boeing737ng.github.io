@@ -22,6 +22,9 @@
   const namuhLinkButton = document.getElementById("namuhLinkButton");
   const popupCloseButton = document.getElementById("popupCloseButton");
   const guidePopup = document.getElementById("guidePopup");
+  const retryGameButton = document.getElementById("retryGameButton");
+  const gameOverPopup = document.getElementById("gameoverPopup");
+  const scoreText = document.getElementById("scoreText");
 
   //const refreshButton = document.getElementById("refreshButton");
 
@@ -101,8 +104,6 @@
   refreshLoop();
 
   init();
-
-
 
   window.addEventListener("resize", resize);
 
@@ -319,26 +320,23 @@
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
       if(!isFromApp) {
-        ctx.fillStyle = "#ffffff55";
-        ctx.rect(0, 0, 480, 720);
-        ctx.fill();
+        
+        //gameOverPopup.style.display = "";
 
-        writeText("Game Over", "center", 240, 280, 50);
-        writeText("Score: " + score, "center", 240, 320, 30);
+        
+
+        // ctx.fillStyle = "#00000090";
+        
+        // ctx.rect(0, 0, 480, 720);
+        
+        // ctx.fill();
+
+        // writeText("내 점수", "center", 240, 250, 30, "#ffffff");
+        // writeText(score, "center", 240, 330, 80, "#ffffff");
       }
-      // writeText(gameOverMessage, "center", 240, 280, 50);
-      // writeText(yourScoreMessage + score, "center", 240, 320, 30);
-      // if (rank !== -1)
-      //   writeText(
-      //     `${rankMessage}${rank} (${rateMessage} ${rate}%)`,
-      //     "center",
-      //     240,
-      //     360,
-      //     30
-      //   );
     } else {
-      writeText(score, "start", 25, 70, 40);
-      writeText("v2.24", "center", 450, 20, 15);
+      writeText(score, "start", 25, 70, 40, "#333333");
+      writeText("v2.24", "center", 450, 20, 15, "#333333");
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
@@ -351,16 +349,16 @@
     }
   });
 
-  function writeText(text, textAlign, x, y, size) {
+  function writeText(text, textAlign, x, y, size, color) {
     ctx.font = `${size}px Pretendard`;
     ctx.textAlign = textAlign;
     // Text border width
     ctx.lineWidth = 1;
 
-    ctx.strokeStyle = "#333333";
+    ctx.strokeStyle = color;
     ctx.strokeText(text, x, y);
 
-    ctx.fillStyle = "#333333";
+    ctx.fillStyle = color;
     ctx.fillText(text, x, y);
   }
 
@@ -453,7 +451,7 @@
     engine.timing.timeScale = 1;
     score = 0;
 
-    gameOverlayer.style.display = "none";
+    gameOverPopup.style.display = "none";
     //playAgainButton.style.display = "none";
 
     while (engine.world.bodies.length > 4) {
@@ -502,24 +500,12 @@
     engine.timing.timeScale = 0;
 
     if (!isFromApp) {
-      gameOverlayer.style.display = "";
+      gameOverPopup.style.display = "";
+      scoreText.textContent = score
     }
 
     if (ball !== null) World.remove(engine.world, ball);
-
-
     shareScore(score);
-
-    // fetch("/score", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ score: score }),
-    // })
-    //   .then((respone) => respone.json())
-    //   .then((data) => {
-    //     rank = data.rank;
-    //     rate = data.rate;
-    //   });
   }
 
   function createNewBall(size) {
@@ -568,9 +554,7 @@
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
       } else {
-          // Fallback for browsers that don't support Web Share API
-          //let shareMessage = `나무 2048 내 기록: ${score} ${window.location.href}`;
-          //alert("Web Share API is not supported in this browser.\n\n" + "You can copy the following message to share:\n\n" + shareMessage);
+
       }
     }
   } 
@@ -585,9 +569,7 @@
     localStorage.setItem("canvas_world", data);
   }
 
-
 //})();
-
 
 function reloadGame() {
   location.reload();
@@ -606,4 +588,8 @@ namuhLinkButton.addEventListener("click", (event) => {
 popupCloseButton.addEventListener("click", (event) => {
   guidePopup.style.display = "none";
 
+});
+
+retryGameButton.addEventListener("click", (event) => {
+  reloadGame();
 });
