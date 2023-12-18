@@ -338,7 +338,7 @@
       //   );
     } else {
       writeText(score, "start", 25, 70, 40);
-      writeText("v2.23", "center", 450, 20, 15);
+      writeText("v2.24", "center", 450, 20, 15);
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
