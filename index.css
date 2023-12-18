@@ -80,7 +80,7 @@ body {
   position: absolute;
   width: 100%;
   height: 75px;
-  font-family: 'NanumBarunGothic', 'serif';
+  font-family: NanumBarunGothic;
   font-size: 26px;
   font-style: normal;
   font-weight: 400;
@@ -92,7 +92,7 @@ body {
 .popupTitle {
   color: #333333;
   text-align: center;
-  font-family: 'NanumBarunGothic', 'serif';
+  font-family: NanumBarunGothic;
   font-size: 30px;
   font-style: normal;
   font-weight: 600;
