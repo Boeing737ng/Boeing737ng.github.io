@@ -446,6 +446,10 @@
       preloadImage(url)
     }
 
+    // if(!isFromNHApp) {
+    //   guidePopup.style.display = "";
+    // }
+
     isGameOver = false;
     ball = null;
     engine.timing.timeScale = 1;
@@ -458,7 +462,6 @@
       engine.world.bodies.pop();
     }
     createBG(1);
-
     createNewBall(1);
     
     //loadPrevGame()
@@ -505,7 +508,7 @@
     }
 
     if (ball !== null) World.remove(engine.world, ball);
-    shareScore(score);
+    //shareScore(score);
   }
 
   function createNewBall(size) {
