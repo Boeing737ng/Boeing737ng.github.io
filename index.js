@@ -327,10 +327,12 @@
 
         // writeText("내 점수", "center", 240, 250, 30, "#ffffff");
         // writeText(score, "center", 240, 330, 80, "#ffffff");
+        
       }
+      writeText(score, "start", 25, 70, 40, "#333333");
     } else {
       writeText(score, "start", 25, 70, 40, "#333333");
-      writeText("v2.25", "center", 450, 20, 15, "#333333");
+      writeText("v2.26", "center", 450, 20, 15, "#333333");
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
