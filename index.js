@@ -15,9 +15,20 @@
   const gameOverlayer = document.getElementById("overlay");
   const refreshLayer = document.getElementById("refreshButton");
   const floor = document.getElementById("floor");
+  const volumes = Array.from(document.getElementsByClassName("volume"));
   const loading = document.getElementById("loadingContainer");
 
   const biImage = document.getElementById("ciImg");
+  const namuhLinkButton = document.getElementById("namuhLinkButton");
+  const popupCloseButton = document.getElementById("popupCloseButton");
+  const guidePopup = document.getElementById("guidePopup");
+  const retryGameButton = document.getElementById("retryGameButton");
+  const gameOverPopup = document.getElementById("gameoverPopup");
+  const scoreText = document.getElementById("scoreText");
+
+  const goNamuhApp = document.getElementById("goNamuhApp");
+
+
 
   //const refreshButton = document.getElementById("refreshButton");
 
@@ -58,6 +69,8 @@
   let isLineEnable = false;
 
   let imgs;
+
+  let isMuted = localStorage.getItem("isMuted") === "true";
 
   let isFromApp = false;
 
@@ -156,7 +169,6 @@
       ball = null;
 
       newSize = ceil(random() * 3);
-      
       setTimeout(() => createNewBall(newSize), 500);
     }
     
@@ -191,9 +203,19 @@
 
       newSize = ceil(random() * 3);
 
+      newSize = 11
+
       setTimeout(() => createNewBall(newSize), 500);
     }
   });
+
+  volumes.forEach((v) =>
+    v.addEventListener("click", () => {
+      isMuted = !isMuted;
+      localStorage.setItem("isMuted", isMuted);
+
+    })
+  );
   canvas.addEventListener("mouseover", () => {
     isMouseOver = true;
   });
@@ -308,12 +330,10 @@
 
         // writeText("내 점수", "center", 240, 250, 30, "#ffffff");
         // writeText(score, "center", 240, 330, 80, "#ffffff");
-        
       }
-      writeText(score, "start", 25, 70, 40, "#333333");
     } else {
       writeText(score, "start", 25, 70, 40, "#333333");
-      writeText("v2.26", "center", 450, 20, 15, "#333333");
+      writeText("v2.24", "center", 450, 20, 15, "#333333");
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
@@ -345,12 +365,26 @@
 
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
-      
+      // gameOverPopup.stlye.zoom = 1 //김어진 추가
+      // guidePopup.style.zoom = 1  //김어진 추가
       floor.style.height = `${Math.max(
         10,
         (window.innerHeight - canvas.height * parent.style.zoom) /
         parent.style.zoom
+        //window.innerHeight - (canvas.height * parent.style.zoom)
+
+
       )}px`;
+      
+     // console.log(canvas.height * parent.style.zoom)
+      //console.log(window.innerHeight - (canvas.height * parent.style.zoom))
+
+
+      // floor.style.height = `${Math.max(
+      //   110,
+      //   (window.innerHeight - (canvas.height * parent.style.zoom))
+      // )}px`;
+
       biImage.style.left = "50%"
       biImage.style.transform = "translateX(-50%)";
 
@@ -358,6 +392,8 @@
       
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.2;
+      gameOverPopup.style.zoom = window.innerHeight / 720 / 1.2; //김어진 추가
+      guidePopup.style.zoom = window.innerHeight / 720 / 1.2; //김어진 추가
       console.log("PC ZOOM")
       floor.style.height = "50px";
 
@@ -419,6 +455,9 @@
     engine.timing.timeScale = 1;
     score = 0;
 
+    gameOverPopup.style.display = "none";
+    //playAgainButton.style.display = "none";
+
     while (engine.world.bodies.length > 4) {
       engine.world.bodies.pop();
     }
@@ -463,8 +502,11 @@
     isGameOver = true;
     engine.timing.timeScale = 0;
 
-    var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
-    document.location.href = urlStr;
+    if (!isFromApp) {
+      gameOverPopup.style.display = "";
+      scoreText.textContent = score
+    }
+
     if (ball !== null) World.remove(engine.world, ball);
     //shareScore(score);
   }
@@ -503,7 +545,8 @@
   }
   function shareScore(score) {
     if (isFromApp) {
-      
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+      document.location.href = urlStr;
     } else {
       if (navigator.share) {
         navigator.share({
@@ -540,3 +583,28 @@ document.getElementById("refreshButton")
     //reloadGame()
     gameOver()
   });
+
+namuhLinkButton.addEventListener("click", (event) => {
+  window.open("https://namuh.page.link/popPANG");
+});
+
+goNamuhApp.addEventListener("click", (event) => {
+  window.open("https://namuh.page.link/popPANG");
+});
+
+popupCloseButton.addEventListener("click", (event) => {
+  guidePopup.style.display = "none";
+
+});
+
+retryGameButton.addEventListener("click", (event) => {
+  reloadGame();
+});
+
+
+
+
+
+
+
+console.log(window.innerHeight / 720 / 1.2)

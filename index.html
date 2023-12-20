@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-
+    <link rel="stylesheet" href="reset.css">
     <link href="index.css" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -40,7 +40,13 @@
           GAME OVER
         </button>
         <img id="ciImg" src="assets/img/nds_img_bi_nm.png" alt="">
-      
+        <!-- <div id="overlay">
+          <button id="playAgainButton" onclick="location.reload()">
+            다시하기
+          </button>
+        </div> -->
+
+
         <canvas id="canvas"></canvas>
         <div id="floor">
           <!-- <div id="banner">
@@ -49,8 +55,56 @@
         </div>
       </div>
 
+      <div class="popupContainer" id="gameoverPopup">
+        <div class="gameOverBgWrap">
+          <img src="assets/img/nds_img_gameover_bg.png" id="gameoverBgImg" alt="">
+        </div>
+        <div class="gameOverTextWrap">
+          <p class="gameOverText" id="subText">내 점수</p>
+          <div class="gameOverText" id="score">
+            <p id="scoreText" style="font-weight: 600;">0</p>
+            <p id="scoreTextp">점</sub>
+          </div>
+        </div>
+        <div class="retryGameButtonWrap">
+          <button class="namuhConfirmButton" id="retryGameButton">게임 재도전</button>
+          <button class="goNamuhApp" id="goNamuhApp">나무앱 가기</button>            
+        </div>
+        <div class="share">
+          친구와 같이할까요? <span>나무팡 알리기</span>
+        </div>
+          <div class="caution">
+            본 화면에서 기록한 점수는 이벤트 참여에서 제외됩니다.
+          </div>
+      </div>
+
       <div class="empty"></div>
       <div class="empty"></div>
+    </div>
+
+    <div class="popupContainer" id="guidePopup">
+      <div class="popup">
+        <div class="popupCloseButtonWrap">
+          <img class="popupCloseButton" id="popupCloseButton" src="assets/img/nds_icon_close.png" alt="">
+        </div>
+        <!-- <a href="#0" class="cd-popup-close img-replace">Close</a> -->
+        <p class="popupTitle">나무팡 더 즐기기</p>
+        <div class="guideImageWrap">
+          <img class="guideImage" src="assets/img/nds_img_guide01.png" alt="">
+        </div>
+        <div class="popupDescription">
+          나무에서 게임을 플레이하면<br>
+          랭킹과 이벤트에 참여할 수 있어요!
+          <div class="popupDescriptionSub">
+            여기서는 게임 플레이만 할 수 있어요
+          </div>
+        </div>
+
+
+
+
+        <button class="namuhConfirmButton" id="namuhLinkButton">나무에서 플레이하기</button>
+      </div>
     </div>
     <!-- <script defer src="resurrect.js"></script> -->
     <script defer src="index.js"></script>
