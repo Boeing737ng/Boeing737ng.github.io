@@ -506,7 +506,7 @@ a {
     left: 50%;
     transform: translate(-50%,0);
     background-color: white;
-    border-radius: 2.9630vw;
+    border-radius: 16px;
     z-index:10;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
