@@ -156,6 +156,7 @@
       ball = null;
 
       newSize = ceil(random() * 3);
+      
       setTimeout(() => createNewBall(newSize), 500);
     }
     
@@ -254,37 +255,40 @@
       bodies = [collision.bodyA, collision.bodyB];
 
       if (bodies[0].size == undefined || bodies[1].size == undefined) return;
-
-      if (bodies[0].size == bodies[1].size) {
-        allBodies = Composite.allBodies(engine.world);
-        if (allBodies.includes(bodies[0]) && allBodies.includes(bodies[1])) {
-          if (
-            (Date.now() - bodies[0].createdAt < 100 ||
-              Date.now() - bodies[1].createdAt < 100) &&
-            bodies[0].createdAt !== 0 &&
-            bodies[1].createdAt !== 0
-          ) {
-            return;
-          }
-
-          World.remove(engine.world, bodies[0]);
-          World.remove(engine.world, bodies[1]);
-
-          World.add(
-            engine.world,
-            newBall( 
-              (bodies[0].position.x + bodies[1].position.x) / 2,
-              (bodies[0].position.y + bodies[1].position.y) / 2,
-              bodies[0].size == 11 ? 11 : bodies[0].size + 1
-            )
-          );
-
-          score += bodies[0].size;
-          if(navigator.vibrate) {
-            window.navigator.vibrate(100);
+      
+      if (bodies[0].size != 12) {
+        if (bodies[0].size == bodies[1].size) {
+          allBodies = Composite.allBodies(engine.world);
+          if (allBodies.includes(bodies[0]) && allBodies.includes(bodies[1])) {
+            if (
+              (Date.now() - bodies[0].createdAt < 100 ||
+                Date.now() - bodies[1].createdAt < 100) &&
+              bodies[0].createdAt !== 0 &&
+              bodies[1].createdAt !== 0
+            ) {
+              return;
+            }
+  
+            World.remove(engine.world, bodies[0]);
+            World.remove(engine.world, bodies[1]);
+  
+            World.add(
+              engine.world,
+              newBall( 
+                (bodies[0].position.x + bodies[1].position.x) / 2,
+                (bodies[0].position.y + bodies[1].position.y) / 2,
+                bodies[0].size == 12 ? 12 : bodies[0].size + 1
+              )
+            );
+  
+            score += bodies[0].size;
+            if(navigator.vibrate) {
+              window.navigator.vibrate(100);
+            }
           }
         }
       }
+      
     });
   }
 
