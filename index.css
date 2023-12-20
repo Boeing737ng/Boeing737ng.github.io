@@ -96,6 +96,21 @@ body {
   font-size: 23px;
   padding: 18px 0;
 }
+
+#namuhLinkButton {
+  width: 50%;
+  left: 50%;
+  border-radius: 0 0 16px 0;
+}
+
+#popupCloseButton {
+  width: 50%;
+  left: 0;
+  background-color: #F4F4F4;
+  color: black;
+  border-radius: 0 0 0 16px;
+}
+
 .popupTitle {
   color: #333333;
   text-align: center;
