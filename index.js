@@ -15,7 +15,6 @@
   const gameOverlayer = document.getElementById("overlay");
   const refreshLayer = document.getElementById("refreshButton");
   const floor = document.getElementById("floor");
-  const volumes = Array.from(document.getElementsByClassName("volume"));
   const loading = document.getElementById("loadingContainer");
 
   const biImage = document.getElementById("ciImg");
@@ -59,8 +58,6 @@
   let isLineEnable = false;
 
   let imgs;
-
-  let isMuted = localStorage.getItem("isMuted") === "true";
 
   let isFromApp = false;
 
@@ -196,14 +193,6 @@
       setTimeout(() => createNewBall(newSize), 500);
     }
   });
-
-  volumes.forEach((v) =>
-    v.addEventListener("click", () => {
-      isMuted = !isMuted;
-      localStorage.setItem("isMuted", isMuted);
-
-    })
-  );
   canvas.addEventListener("mouseover", () => {
     isMouseOver = true;
   });
@@ -291,21 +280,9 @@
           );
 
           score += bodies[0].size;
-
-          
           if(navigator.vibrate) {
-            //console.log("vibrates")
-            //e.preventDefault();
             window.navigator.vibrate(100);
           }
-
-          if (!isMuted) {
-           // const audio = new Audio("/static/pop.wav");
-            //audio.play();
-          }  
-
-
-          
         }
       }
     });
@@ -369,20 +346,7 @@
         10,
         (window.innerHeight - canvas.height * parent.style.zoom) /
         parent.style.zoom
-        //window.innerHeight - (canvas.height * parent.style.zoom)
-
-
       )}px`;
-      
-     // console.log(canvas.height * parent.style.zoom)
-      //console.log(window.innerHeight - (canvas.height * parent.style.zoom))
-
-
-      // floor.style.height = `${Math.max(
-      //   110,
-      //   (window.innerHeight - (canvas.height * parent.style.zoom))
-      // )}px`;
-
       biImage.style.left = "50%"
       biImage.style.transform = "translateX(-50%)";
 
@@ -497,12 +461,7 @@
 
     var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
     document.location.href = urlStr;
-
-
     if (ball !== null) World.remove(engine.world, ball);
-
-    
-
     //shareScore(score);
   }
 
