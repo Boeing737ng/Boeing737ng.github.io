@@ -27,7 +27,7 @@
   const scoreText = document.getElementById("scoreText");
 
   const goNamuhApp = document.getElementById("goNamuhApp");
-
+  const share = document.getElementById("share");
 
 
   //const refreshButton = document.getElementById("refreshButton");
@@ -203,8 +203,6 @@
 
       newSize = ceil(random() * 3);
 
-      newSize = 11
-
       setTimeout(() => createNewBall(newSize), 500);
     }
   });
@@ -365,26 +363,11 @@
 
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
-      // gameOverPopup.stlye.zoom = 1 //김어진 추가
-      // guidePopup.style.zoom = 1  //김어진 추가
       floor.style.height = `${Math.max(
         10,
         (window.innerHeight - canvas.height * parent.style.zoom) /
         parent.style.zoom
-        //window.innerHeight - (canvas.height * parent.style.zoom)
-
-
       )}px`;
-      
-     // console.log(canvas.height * parent.style.zoom)
-      //console.log(window.innerHeight - (canvas.height * parent.style.zoom))
-
-
-      // floor.style.height = `${Math.max(
-      //   110,
-      //   (window.innerHeight - (canvas.height * parent.style.zoom))
-      // )}px`;
-
       biImage.style.left = "50%"
       biImage.style.transform = "translateX(-50%)";
 
@@ -392,8 +375,8 @@
       
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.2;
-      gameOverPopup.style.zoom = window.innerHeight / 720 / 1.2; //김어진 추가
-      guidePopup.style.zoom = window.innerHeight / 720 / 1.2; //김어진 추가
+      gameOverPopup.style.zoom = window.innerHeight / 720 / 1.2;
+      guidePopup.style.zoom = window.innerHeight / 720 / 1.2;
       console.log("PC ZOOM")
       floor.style.height = "50px";
 
@@ -502,7 +485,10 @@
     isGameOver = true;
     engine.timing.timeScale = 0;
 
-    if (!isFromApp) {
+    if (isFromApp) {
+      var urlStr = 'hybrid://SendDataToForm/{"FunctionName":"OnReceiveData","Data":"SendText^' + score + '"}';
+      document.location.href = urlStr;
+    } else {
       gameOverPopup.style.display = "";
       scoreText.textContent = score
     }
@@ -601,10 +587,17 @@ retryGameButton.addEventListener("click", (event) => {
   reloadGame();
 });
 
+share.addEventListener("click", (event) => {
+  console.log("share")
+  if (navigator.share) {
+    navigator.share({
+        title: '나무팡',
+        text: 'https://boeing737ng.github.io/',
+        url: window.location.href  // URL of your game
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing:', error));
+  } else {
 
-
-
-
-
-
-console.log(window.innerHeight / 720 / 1.2)
+  }
+});
