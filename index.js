@@ -601,6 +601,6 @@ share.addEventListener("click", (event) => {
     .then(() => console.log('Successful share'))
     .catch((error) => console.log('Error sharing:', error));
   } else {
-
+    window.alert("지원하지 않는 기기입니다.");
   }
 });
