@@ -334,7 +334,7 @@
       writeText(score, "start", 25, 70, 40, "#333333");
     } else {
       writeText(score, "start", 25, 70, 40, "#333333");
-      //writeText("v2.24", "center", 450, 20, 15, "#333333");
+      writeText("v2.25", "center", 450, 20, 15, "#333333");
 
       if (isLineEnable) {
         ctx.strokeStyle = "#74D5FF";
@@ -592,7 +592,7 @@ retryGameButton.addEventListener("click", (event) => {
 
 share.addEventListener("click", (event) => {
   console.log("share")
-  if (navigator.share) {
+  if (navigator.canShare()) {
     navigator.share({
         title: '나무팡',
         //text: 'https://downloadcdn.nhqv.com/pang/index.html',
