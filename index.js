@@ -595,7 +595,7 @@ share.addEventListener("click", (event) => {
   if (navigator.share) {
     navigator.share({
         title: '나무팡',
-        text: 'https://boeing737ng.github.io/',
+        //text: 'https://downloadcdn.nhqv.com/pang/index.html',
         url: window.location.href  // URL of your game
     })
     .then(() => console.log('Successful share'))
