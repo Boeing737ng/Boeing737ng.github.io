@@ -592,7 +592,7 @@ retryGameButton.addEventListener("click", (event) => {
 
 share.addEventListener("click", (event) => {
   console.log("share")
-  if (navigator.canShare()) {
+  if (navigator.share) {
     navigator.share({
         title: '나무팡',
         //text: 'https://downloadcdn.nhqv.com/pang/index.html',
