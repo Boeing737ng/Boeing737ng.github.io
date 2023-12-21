@@ -438,7 +438,7 @@ button * {
   height: 30px;
   transform: translate(300px,5px);
 
-  display: none;
+  /* display: none; */
 }
 
 #playAgainButton {
